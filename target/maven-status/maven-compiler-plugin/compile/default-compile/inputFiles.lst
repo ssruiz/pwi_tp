@@ -5,6 +5,7 @@ C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\models
 C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\dao\models\EspecialidadDAO.java
 C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\services\SucursalService.java
 C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\models\PersonaSucursalServicio.java
+C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\util\HibernateProxyTypeAdapter.java
 C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\models\Persona.java
 C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\models\Local.java
 C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\models\Ciudad.java
@@ -15,6 +16,7 @@ C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\models
 C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\services\Conf.java
 C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\models\SucursalServicio.java
 C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\models\HorarioExcepcion.java
+C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\util\ExcludeProxiedFields.java
 C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\models\Reserva.java
 C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\dao\models\SucursalDAO.java
 C:\Users\ssrui\Desktop\Facultad\Programacion Web\Project\TP\src\main\java\dao\models\NewHibernateUtil.java

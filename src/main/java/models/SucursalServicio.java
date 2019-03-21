@@ -3,6 +3,7 @@ package models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.annotations.Expose;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,9 +13,11 @@ import java.util.Set;
  */
 public class SucursalServicio  implements java.io.Serializable {
 
-
+    
      private int idSucursalServicio;
+     @Expose
      private Servicio servicio;
+       @Expose
      private Sucursal sucursal;
      private Integer duracion;
      private BigDecimal precio;

@@ -2,6 +2,7 @@ package models;
 // Generated Mar 17, 2019 11:08:27 PM by Hibernate Tools 4.3.1
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.annotations.Expose;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +13,7 @@ import org.hibernate.annotations.Proxy;
  */
 @Proxy(lazy = false)
 public class Sucursal implements java.io.Serializable {
-
+    @Expose
     private int idSucursal;
     @JsonIgnore
     private Ciudad ciudad;

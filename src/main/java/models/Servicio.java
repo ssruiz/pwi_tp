@@ -3,6 +3,7 @@ package models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.annotations.Expose;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,9 +12,10 @@ import java.util.Set;
  */
 public class Servicio  implements java.io.Serializable {
 
-
+      @Expose
      private int idServicio;
      private Especialidad especialidad;
+       @Expose
      private String nombre;
      private int duracionReferencia;
      private Set sucursalServicios = new HashSet(0);
