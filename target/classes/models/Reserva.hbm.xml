@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 17, 2019 11:08:27 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="models.Reserva" table="reserva" schema="public" optimistic-lock="version">
+        <id name="idReserva" type="int">
+            <column name="id_reserva" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="personaByIdEmpleado" class="models.Persona" fetch="select">
+            <column name="id_empleado" />
+        </many-to-one>
+        <many-to-one name="personaByIdCliente" class="models.Persona" fetch="select">
+            <column name="id_cliente" not-null="true" />
+        </many-to-one>
+        <many-to-one name="sucursalServicio" class="models.SucursalServicio" fetch="select">
+            <column name="id_sucursal_servicio" not-null="true" />
+        </many-to-one>
+        <property name="fecha" type="date">
+            <column name="fecha" length="13" not-null="true" />
+        </property>
+        <property name="horaInicio" type="time">
+            <column name="hora_inicio" length="15" not-null="true" />
+        </property>
+        <property name="horaFin" type="time">
+            <column name="hora_fin" length="15" not-null="true" />
+        </property>
+        <property name="fechaHoraCreacion" type="timestamp">
+            <column name="fecha_hora_creacion" length="29" not-null="true" />
+        </property>
+        <property name="flagEstado" type="string">
+            <column name="flag_estado" length="1" not-null="true" />
+        </property>
+        <property name="flagAsistio" type="string">
+            <column name="flag_asistio" length="1" />
+        </property>
+        <property name="observacion" type="string">
+            <column name="observacion" length="200" />
+        </property>
+    </class>
+</hibernate-mapping>

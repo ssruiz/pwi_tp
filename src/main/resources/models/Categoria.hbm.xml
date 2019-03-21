@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 17, 2019 11:08:27 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="models.Categoria" table="categoria" schema="public" optimistic-lock="version">
+        <id name="idCategoria" type="int">
+            <column name="id_categoria" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" not-null="true" unique="true" />
+        </property>
+        <set name="locals" table="categoria_local" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="id_categoria" not-null="true" />
+            </key>
+            <many-to-many entity-name="models.Local">
+                <column name="id_local" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

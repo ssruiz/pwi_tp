@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 17, 2019 11:08:27 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="models.SucursalServicio" table="sucursal_servicio" schema="public" optimistic-lock="version">
+        <id name="idSucursalServicio" type="int">
+            <column name="id_sucursal_servicio" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="servicio" class="models.Servicio" fetch="select">
+            <column name="id_servicio" not-null="true" />
+        </many-to-one>
+        <many-to-one name="sucursal" class="models.Sucursal" fetch="select">
+            <column name="id_sucursal" not-null="true" />
+        </many-to-one>
+        <property name="duracion" type="java.lang.Integer">
+            <column name="duracion" />
+        </property>
+        <property name="precio" type="big_decimal">
+            <column name="precio" precision="15" not-null="true" />
+        </property>
+        <property name="capacidad" type="int">
+            <column name="capacidad" not-null="true" />
+        </property>
+        <set name="personaSucursalServicios" table="persona_sucursal_servicio" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_sucursal_servicio" not-null="true" />
+            </key>
+            <one-to-many class="models.PersonaSucursalServicio" />
+        </set>
+        <set name="reservas" table="reserva" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_sucursal_servicio" not-null="true" />
+            </key>
+            <one-to-many class="models.Reserva" />
+        </set>
+    </class>
+</hibernate-mapping>

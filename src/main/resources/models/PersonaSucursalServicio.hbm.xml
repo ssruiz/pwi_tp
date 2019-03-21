@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 17, 2019 11:08:27 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="models.PersonaSucursalServicio" table="persona_sucursal_servicio" schema="public" optimistic-lock="version">
+        <id name="idPersonaSucursalServicio" type="int">
+            <column name="id_persona_sucursal_servicio" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="persona" class="models.Persona" fetch="select">
+            <column name="id_empleado" not-null="true" />
+        </many-to-one>
+        <many-to-one name="sucursalServicio" class="models.SucursalServicio" fetch="select">
+            <column name="id_sucursal_servicio" not-null="true" />
+        </many-to-one>
+        <property name="precio" type="big_decimal">
+            <column name="precio" precision="15" />
+        </property>
+    </class>
+</hibernate-mapping>

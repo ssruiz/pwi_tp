@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 17, 2019 11:08:27 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="models.Persona" table="persona" schema="public" optimistic-lock="version">
+        <id name="idPersona" type="int">
+            <column name="id_persona" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="local" class="models.Local" fetch="select">
+            <column name="id_local" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" not-null="true" />
+        </property>
+        <property name="apellido" type="string">
+            <column name="apellido" length="50" not-null="true" />
+        </property>
+        <property name="numeroDocumento" type="string">
+            <column name="numero_documento" length="50" />
+        </property>
+        <property name="fechaNacimiento" type="date">
+            <column name="fecha_nacimiento" length="13" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="50" not-null="true" unique="true" />
+        </property>
+        <property name="usuario" type="string">
+            <column name="usuario" length="50" />
+        </property>
+        <property name="flagEmpleado" type="string">
+            <column name="flag_empleado" length="1" not-null="true" />
+        </property>
+        <set name="personaSucursalServicios" table="persona_sucursal_servicio" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empleado" not-null="true" />
+            </key>
+            <one-to-many class="models.PersonaSucursalServicio" />
+        </set>
+        <set name="reservasForIdEmpleado" table="reserva" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_empleado" />
+            </key>
+            <one-to-many class="models.Reserva" />
+        </set>
+        <set name="reservasForIdCliente" table="reserva" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_cliente" not-null="true" />
+            </key>
+            <one-to-many class="models.Reserva" />
+        </set>
+    </class>
+</hibernate-mapping>

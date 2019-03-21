@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 17, 2019 11:08:27 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="models.Sucursal" table="sucursal" schema="public" optimistic-lock="version">
+        <id name="idSucursal" type="int">
+            <column name="id_sucursal" />
+            <generator class="foreign">
+                <param name="property">local</param>
+            </generator>
+        </id>
+        <many-to-one name="ciudad" class="models.Ciudad" fetch="select">
+            <column name="id_ciudad" not-null="true" />
+        </many-to-one>
+        <one-to-one name="local" class="models.Local" constrained="true"></one-to-one>
+        <many-to-one name="mapa" class="models.Mapa" fetch="select">
+            <column name="id_mapa" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="50" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="200" />
+        </property>
+        <property name="idLocal" type="int">
+            <column name="id_local" not-null="true" />
+        </property>
+        <property name="lunesHoraApertura" type="time">
+            <column name="lunes_hora_apertura" length="15" />
+        </property>
+        <property name="lunesHoraCierre" type="time">
+            <column name="lunes_hora_cierre" length="15" />
+        </property>
+        <property name="martesHoraApertura" type="time">
+            <column name="martes_hora_apertura" length="15" />
+        </property>
+        <property name="martesHoraCierre" type="time">
+            <column name="martes_hora_cierre" length="15" />
+        </property>
+        <property name="miercolesHoraApertura" type="time">
+            <column name="miercoles_hora_apertura" length="15" />
+        </property>
+        <property name="miercolesHoraCierre" type="time">
+            <column name="miercoles_hora_cierre" length="15" />
+        </property>
+        <property name="juevesHoraApertura" type="time">
+            <column name="jueves_hora_apertura" length="15" />
+        </property>
+        <property name="juevesHoraCierre" type="time">
+            <column name="jueves_hora_cierre" length="15" />
+        </property>
+        <property name="viernesHoraApertura" type="time">
+            <column name="viernes_hora_apertura" length="15" />
+        </property>
+        <property name="viernesHoraCierre" type="time">
+            <column name="viernes_hora_cierre" length="15" />
+        </property>
+        <property name="sabadoHoraApertura" type="time">
+            <column name="sabado_hora_apertura" length="15" />
+        </property>
+        <property name="sabadoHoraCierre" type="time">
+            <column name="sabado_hora_cierre" length="15" />
+        </property>
+        <property name="domingoHoraApertura" type="time">
+            <column name="domingo_hora_apertura" length="15" />
+        </property>
+        <property name="domingoHoraCierre" type="time">
+            <column name="domingo_hora_cierre" length="15" />
+        </property>
+        <set name="horarioExcepcions" table="horario_excepcion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_sucursal" not-null="true" />
+            </key>
+            <one-to-many class="models.HorarioExcepcion" />
+        </set>
+        <set name="sucursalServicios" table="sucursal_servicio" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_sucursal" not-null="true" />
+            </key>
+            <one-to-many class="models.SucursalServicio" />
+        </set>
+    </class>
+</hibernate-mapping>
