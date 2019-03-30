@@ -39,7 +39,8 @@ public class EspecialidadService {
     public Response getCategorias(@Context UriInfo info) {
         String from = info.getQueryParameters().getFirst("idSucursal");
         int id = Integer.parseInt(from);
-        EspecialidadDAO daoc = new EspecialidadDAO();
+        EspecialidadDAO daoc;
+        daoc= new EspecialidadDAO();
         System.out.println("ADASDSADS");
         String categorias = daoc.getEspecialidades(id);
         return Response.ok(categorias).build();

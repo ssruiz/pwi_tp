@@ -37,7 +37,8 @@ q @JsonIgnore
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSucursales(@Context UriInfo info) {
         String from = info.getQueryParameters().getFirst("idCategoria");
-        SucursalDAO daos = new SucursalDAO();
+        SucursalDAO daos;
+        daos= new SucursalDAO();
         int id = Integer.parseInt(from);
         return Response.status(200)
 		   .entity(daos.getSucursalesByCate(id)).build();
