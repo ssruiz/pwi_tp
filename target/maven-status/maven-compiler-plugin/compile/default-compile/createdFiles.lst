@@ -1,5 +1,6 @@
 models\SucursalServicio.class
 models\Local.class
+util\HibernateProxyTypeAdapter.class
 dao\models\SucursalDAO.class
 dao\models\NewHibernateUtil.class
 models\Ciudad.class
@@ -7,9 +8,11 @@ models\Servicio.class
 dao\models\JPAUtil.class
 services\CategoriaService.class
 models\Mapa.class
+services\ProfesionalService.class
 models\Sucursal.class
 models\Categoria.class
 models\Persona.class
+util\HibernateProxyTypeAdapter$1.class
 models\HorarioExcepcion.class
 models\Especialidad.class
 services\SucursalService.class
@@ -17,5 +20,6 @@ models\PersonaSucursalServicio.class
 models\Reserva.class
 services\EspecialidadService.class
 dao\models\CategoriaDAO.class
+util\ExcludeProxiedFields.class
 dao\models\EspecialidadDAO.class
 services\Conf.class

@@ -2,6 +2,7 @@ package models;
 // Generated Mar 17, 2019 11:08:27 PM by Hibernate Tools 4.3.1
 
 
+import com.google.gson.annotations.Expose;
 import java.math.BigDecimal;
 
 /**
@@ -9,8 +10,8 @@ import java.math.BigDecimal;
  */
 public class PersonaSucursalServicio  implements java.io.Serializable {
 
-
      private int idPersonaSucursalServicio;
+     @Expose
      private Persona persona;
      private SucursalServicio sucursalServicio;
      private BigDecimal precio;
