@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Mar 17, 2019 11:08:27 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Apr 1, 2019 9:07:40 AM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="models.Especialidad" table="especialidad" schema="public" optimistic-lock="version">
+    <class name="models.Especialidad" table="especialidad" schema="public">
         <id name="idEspecialidad" type="int">
             <column name="id_especialidad" />
-            <generator class="assigned" />
+            <generator class="assigned"></generator>
         </id>
         <property name="nombre" type="string">
             <column name="nombre" length="50" not-null="true" unique="true" />

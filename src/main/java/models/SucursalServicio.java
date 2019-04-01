@@ -1,9 +1,7 @@
 package models;
-// Generated Mar 17, 2019 11:08:27 PM by Hibernate Tools 4.3.1
+// Generated Apr 1, 2019 9:07:39 AM by Hibernate Tools 4.3.1
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.gson.annotations.Expose;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,18 +11,14 @@ import java.util.Set;
  */
 public class SucursalServicio  implements java.io.Serializable {
 
-    
+
      private int idSucursalServicio;
-     @Expose
      private Servicio servicio;
-       @Expose
      private Sucursal sucursal;
      private Integer duracion;
      private BigDecimal precio;
      private int capacidad;
-     @JsonIgnore
      private Set personaSucursalServicios = new HashSet(0);
-     @JsonIgnore
      private Set reservas = new HashSet(0);
 
     public SucursalServicio() {
