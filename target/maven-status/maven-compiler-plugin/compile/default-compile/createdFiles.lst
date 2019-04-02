@@ -17,9 +17,11 @@ models\Categoria.class
 models\Persona.class
 dao\models\ProfesionalDAO.class
 dao\models\ReservaDAO.class
+services\Ejercicio10.class
 util\HibernateProxyTypeAdapter$1.class
 models\HorarioExcepcion.class
 models\Especialidad.class
+services\DailyTask.class
 services\SucursalService.class
 models\PersonaSucursalServicio.class
 models\auxiliares\NuevaReserva.class

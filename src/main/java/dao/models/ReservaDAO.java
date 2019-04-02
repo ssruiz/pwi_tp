@@ -567,83 +567,33 @@ public class ReservaDAO {
 
     public String getAllReserv(BusquedaReserva nr) {
         String resultado = "";
-        
+
         System.out.println("Desde" + nr.getFechaDesde());
         System.out.println("Hasta" + nr.getFechaHasta());
 
         try {
             iniciarOperacion();
             CriteriaBuilder builder = sesion.getCriteriaBuilder();
-
-            CriteriaQuery<SucursalServicio> cqs = builder.createQuery(SucursalServicio.class);
-            Root<SucursalServicio> scursa = cqs.from(SucursalServicio.class);
-            cqs.select(scursa).where(builder.equal(scursa.get("idSucursalServicio"), 100));
-            Query<SucursalServicio> querySS = sesion.createQuery(cqs);
-            SucursalServicio aux = querySS.getSingleResult();
-            Date horaAper = aux.getSucursal().getDomingoHoraCierre();
-            Calendar cal1 = Calendar.getInstance();
-            Calendar cal2 = Calendar.getInstance();
-            Calendar cal3 = Calendar.getInstance();
-            cal3.setTime(nr.getFechaDesde());
-            cal1.setTime(horaAper);
-            cal2.setTime(horaAper);
-
-            //CriteriaBuilder builder = sesion.getCriteriaBuilder();
             CriteriaQuery<Reserva> criteriaReserva = builder.createQuery(Reserva.class);
             Root<Reserva> reservaRoot = criteriaReserva.from(Reserva.class);
-
-            cal1.set(Calendar.HOUR_OF_DAY, nr.getHoraInicio().getHour());
-            cal1.set(Calendar.MINUTE, nr.getHoraInicio().getMinute());
-            cal1.set(Calendar.SECOND, nr.getHoraInicio().getSecond());
-            cal2.set(Calendar.HOUR_OF_DAY, nr.getHoraFin().getHour());
-            cal2.set(Calendar.MINUTE, nr.getHoraFin().getMinute());
-            cal2.set(Calendar.SECOND, nr.getHoraFin().getSecond());
-
-            Calendar cal = Calendar.getInstance();
-
-            Date date = cal1.getTime();
-
-            DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-            String formattedDate = dateFormat.format(date);
-
-            Predicate[] predicates = new Predicate[5];
-            predicates[0] = builder.greaterThanOrEqualTo(reservaRoot.<Date>get("horaInicio"), cal1.getTime());
-            predicates[1] = builder.lessThanOrEqualTo(reservaRoot.<Date>get("horaInicio"), cal2.getTime());
-
-            predicates[2] = builder.equal(reservaRoot.get("sucursalServicio").get("sucursal").get("idSucursal"), nr.getIdSucursal());
-            predicates[3] = builder.greaterThanOrEqualTo(reservaRoot.<Date>get("fecha"), nr.getFechaDesde());
-            predicates[4] = builder.lessThanOrEqualTo(reservaRoot.<Date>get("fecha"), nr.getFechaHasta());
-
-            criteriaReserva.select(reservaRoot).where(predicates);
-
+            List<Predicate> predicates = llenarPredicados(nr, reservaRoot);
+            criteriaReserva.select(reservaRoot).where(predicates.toArray(new Predicate[predicates.size()]));
             Query<Reserva> queryReservas = sesion.createQuery(criteriaReserva);
             List<Reserva> reser = queryReservas.getResultList();
 
             System.out.println("SIZE>>" + reser.size());
             //System.out.println("SIZE>>" + cal1.getTime());
-
+            JSONArray listaReservas = new JSONArray();
             for (Reserva item : reser) {
-                System.out.println(item.getFlagEstado());
+
+                listaReservas.add(cargarReserva(item));
+
             }
-            /*
-             boolean condicion1, condicion2;
-             CriteriaBuilder builder = sesion.getCriteriaBuilder();
-             CriteriaQuery<Reserva> criteriaReserva = builder.createQuery(Reserva.class);
-             Root<Reserva> reservaRoot = criteriaReserva.from(Reserva.class);
-             criteriaReserva.select(reservaRoot).where(builder.equal(reservaRoot.get("idReserva"), nr.getIdReserva()));
-             Query<Reserva> query = sesion.createQuery(criteriaReserva);
-             Reserva r = query.getSingleResult();
-
-             r.setObservacion(nr.getObservacion());
-             r.setFlagAsistio(nr.getFlagAsistio());
-             r.setFlagEstado(nr.getFlagEstado());
-
-             sesion.update(r);
-             tran.commit();
-             JSONObject obj = new JSONObject();
-             obj.put("Resultado", "La reserva se actualizo  correctamente");
-             resultado = obj.toJSONString();
-             */
+            JSONObject obj = new JSONObject();
+            obj.put("Total", reser.size());
+            listaReservas.add(obj);
+            // lista = listaDisponibles.toJSONString();
+            resultado = listaReservas.toJSONString();
         } catch (HibernateException e) {
             e.printStackTrace();
             JSONObject obj = new JSONObject();
@@ -655,8 +605,99 @@ public class ReservaDAO {
         }
         return resultado;
     }
-    /*Ejercicio 9*/
 
+    public JSONObject cargarReserva(Reserva r) {
+        JSONObject obj = new JSONObject();
+        obj.put("local", r.getSucursalServicio().getSucursal().getLocal().getNombre());
+        obj.put("sucursal", r.getSucursalServicio().getSucursal().getDescripcion());
+        obj.put("fecha", r.getFecha().toString());
+        obj.put("hora inicio", r.getHoraInicio().toString());
+        obj.put("hora fin", r.getHoraFin().toString());
+        obj.put("especialidad", r.getSucursalServicio().getServicio().getEspecialidad().getNombre());
+        obj.put("servicio", r.getSucursalServicio().getServicio().getNombre());
+        if (r.getPersonaByIdEmpleado() != null) {
+            obj.put("empleado", r.getPersonaByIdEmpleado().getNombre());
+        } else {
+            obj.put("empleado","");
+        }
+
+        if ("R".equals(r.getFlagEstado())) {
+            obj.put("estado", "Reservado");
+        } else if ("C".equals(r.getFlagEstado())) {
+            obj.put("estado", "Cancelado");
+        } else {
+            obj.put("estado", "");
+        }
+        if (r.getFlagAsistio().equals("S")) {
+            obj.put("asistio", "Sí");
+        } else if (r.getFlagAsistio().equals("N")) {
+            obj.put("asistio", "No");
+        } else {
+            obj.put("asistio", "");
+        }
+
+        return obj;
+    }
+
+    public List<Predicate> llenarPredicados(BusquedaReserva nr, Root<Reserva> reservaRoot) {
+        List<Predicate> predicates = new ArrayList<>();
+        CriteriaBuilder builder = sesion.getCriteriaBuilder();
+
+        CriteriaQuery<SucursalServicio> cqs = builder.createQuery(SucursalServicio.class);
+        Root<SucursalServicio> scursa = cqs.from(SucursalServicio.class);
+        cqs.select(scursa).where(builder.equal(scursa.get("idSucursalServicio"), 100));
+        Query<SucursalServicio> querySS = sesion.createQuery(cqs);
+        SucursalServicio aux = querySS.getSingleResult();
+        Date horaAper = aux.getSucursal().getDomingoHoraCierre();
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(horaAper);
+        cal2.setTime(horaAper);
+        cal1.set(Calendar.HOUR_OF_DAY, nr.getHoraInicio().getHour());
+        cal1.set(Calendar.MINUTE, nr.getHoraInicio().getMinute());
+        cal1.set(Calendar.SECOND, nr.getHoraInicio().getSecond());
+        cal2.set(Calendar.HOUR_OF_DAY, nr.getHoraFin().getHour());
+        cal2.set(Calendar.MINUTE, nr.getHoraFin().getMinute());
+        cal2.set(Calendar.SECOND, nr.getHoraFin().getSecond());
+        System.out.println("ASIST" + nr.getAsistio());
+        if (nr.getHoraInicio() != null) {
+            predicates.add(builder.greaterThanOrEqualTo(reservaRoot.<Date>get("horaInicio"), cal1.getTime()));
+        }
+        if (nr.getHoraFin() != null) {
+            predicates.add(builder.lessThanOrEqualTo(reservaRoot.<Date>get("horaInicio"), cal2.getTime()));
+        }
+        if (nr.getIdSucursal() != 0) {
+            predicates.add(builder.equal(reservaRoot.get("sucursalServicio").get("sucursal").get("idSucursal"), nr.getIdSucursal()));
+        }
+        if (nr.getFechaDesde() != null) {
+            predicates.add(builder.greaterThanOrEqualTo(reservaRoot.<Date>get("fecha"), nr.getFechaDesde()));
+        }
+        if (nr.getFechaHasta() != null) {
+            predicates.add(builder.lessThanOrEqualTo(reservaRoot.<Date>get("fecha"), nr.getFechaHasta()));
+        }
+        if (nr.getAsistio() != null) {
+            predicates.add(builder.equal(reservaRoot.get("flagAsistio"), nr.getAsistio()));
+        }
+        if (nr.getEstado() != null) {
+            predicates.add(builder.equal(reservaRoot.get("flagEstado"), nr.getEstado()));
+        }
+        if (nr.getIdEmpleado() != 0) {
+            predicates.add(builder.equal(reservaRoot.get("personaByIdEmpleado").get("idPersona"), nr.getIdEmpleado()));
+        }
+        if (nr.getIdEspecialidad() != 0) {
+            predicates.add(builder.equal(reservaRoot.get("sucursalServicio").get("servicio").get("especialidad").get("idEspecialidad"), nr.getIdEspecialidad()));
+        }
+        if (nr.getIdLocal() != 0) {
+            predicates.add(builder.equal(reservaRoot.get("sucursalServicio").get("sucursal").get("local").get("idLocal"), nr.getIdLocal()));
+        }
+        if (nr.getIdServicio() != 0) {
+            predicates.add(builder.equal(reservaRoot.get("sucursalServicio").get("servicio").get("idServicio"), nr.getIdServicio()));
+        }
+
+        return predicates;
+    }
+
+    /*Ejercicio 9*/
     public String actualizarReserv(PutReserva nr) {
         String resultado = "";
         System.out.println("AAAAAAAAAA");

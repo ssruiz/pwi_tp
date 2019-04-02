@@ -122,28 +122,12 @@ public class ReservaService {
     @GET
     @Path("disponible/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllReservas(BusquedaReserva reserva ) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getAllReservas(BusquedaReserva reserva) {
         String disponibles = "";
         try {
-          
-            /*
-             reserva.setIdSucursal((Integer) res.get("idSucursal"));
-             reserva.setIdServicio((Integer) res.get("idServicio"));
-             reserva.setIdLocal((Integer) res.get("idLocal"));
-             reserva.setIdEspecialidad((Integer)res.get("idEspecialidad"));
-             reserva.setIdEmpleado((Integer) res.get("idEmpleado"));
-             reserva.setAsistio(res.get("asistio").toString());
-             reserva.setEstado(res.get("estado").toString());
-             reserva.setFechaDesde(res.get("fechaDesde").toString());
-             reserva.setFechaHasta(res.get("fechaHasta").toString());
-             reserva.setHoraInicio(res.get("horaInicio").toString());
-             reserva.setHoraFin(res.get("horaFin").toString());
-             System.out.println("id " + reserva.toString());
-             /*int id = Integer.parseInt(a);
-             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-             Date fecha = df.parse(str_date);
-             int idEmpleado = Integer.parseInt(idE);
-             */
+
+             
             ReservaDAO daoc;
             daoc = new ReservaDAO();
             //System.out.println("id " + id + " fecha " + date.toString());
