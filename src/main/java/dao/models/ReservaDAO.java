@@ -495,9 +495,9 @@ public class ReservaDAO {
                 nuevaR.setFecha(cal3.getTime());
                 nuevaR.setFechaHoraCreacion(Calendar.getInstance().getTime());
                 nuevaR.setFlagEstado("R");
-                //nuevaR.setHoraInicio(cal1.getTime());
-                // nuevaR.setHoraFin(cal2.getTime());
-                nuevaR.setIdReserva(400);
+                nuevaR.setHoraInicio(cal1.getTime());
+                nuevaR.setHoraFin(cal2.getTime());
+                nuevaR.setIdReserva(600);
                 Persona auxp = getCliente(nr.getEmail());
                 SucursalServicio sucaux = getSucursal(nr.getIdSucursalServicio());
                 nuevaR.setSucursalServicio(aux);
